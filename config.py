@@ -8,6 +8,7 @@ TIME_ZONE = "Asia/Bangkok"
 
 RABBITMQ_URL = os.getenv("RABBITMQ_URL")
 REDIS_URL = os.getenv("UPSTASH_REDIS_REST_URL")
+DATABASE_URL = os.getenv("POSTGRESQL_URL")
 
 EXCHANGE_NAME = "notification.queue.amount"
 ROUTING_KEY = "notify.amount.parsed"
