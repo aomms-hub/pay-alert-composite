@@ -2,6 +2,7 @@ import aio_pika
 import asyncio
 import json
 import time
+import logging
 from config import RABBITMQ_URL, EXCHANGE_NAME, ROUTING_KEY, QUEUE_NAME
 from app.service.notification_service import notify
 from app.service.redis_service import cache_status
@@ -41,12 +42,12 @@ class RabbitClient:
         if self.running:
             print("⚠️ Already consuming.")
             return
-
         await self.connect()
         self.running = True
         self.last_activity = time.time()
         self.consumer_tag = await self.queue.consume(self.on_message)
         cache_status("active")
+        logging.info("Connected from RabbitMQ")
         print("🚀 Start consuming messages...")
 
         self.idle_task = asyncio.create_task(self._idle_watcher())
@@ -81,3 +82,4 @@ class RabbitClient:
             self.exchange = None
             self.queue = None
             cache_status("inactive")
+            logging.info("Disconnected from RabbitMQ")
