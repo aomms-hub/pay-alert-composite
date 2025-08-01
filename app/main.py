@@ -14,7 +14,7 @@ rabbit_client = RabbitClient()
 async def lifespan(app: FastAPI):
     try:
         logging.info("Starting lifespan: connecting to RabbitMQ...")
-        await rabbit_client.connect()
+        await rabbit_client.start()
         logging.info("Connected to RabbitMQ!")
         yield
     except Exception as e:
