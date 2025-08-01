@@ -5,6 +5,7 @@ from pydantic import BaseModel
 
 class TTSResponse(BaseModel):
     from_cache: bool
+    amount: str
     audio_url: str
 
 async def send_amount(amount: str) -> TTSResponse:

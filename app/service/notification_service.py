@@ -1,5 +1,3 @@
-from pydantic import BaseModel
-
 from app.client.amount_tts_service_client import send_amount
 
 

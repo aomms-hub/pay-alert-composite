@@ -32,7 +32,7 @@ app = FastAPI(lifespan=lifespan)
 async def root():
     return {"message": "🚀 Pay Alert Composite is alive!"}
 
-@app.post("/start-consume")
+@app.post("/start_consumer")
 async def start_consume(background_tasks: BackgroundTasks):
     if rabbit_client.is_running():
         return {"status": "already consuming"}
