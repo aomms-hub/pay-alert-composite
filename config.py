@@ -13,6 +13,6 @@ EXCHANGE_NAME = "notification.queue.amount"
 ROUTING_KEY = "notify.amount.parsed"
 QUEUE_NAME = "noti.amount.in.composite"
 
-AMOUNT_TTS_SERVICE_URL = "amount-tts-service.railway.internal"
-# AMOUNT_TTS_SERVICE_URL = "https://amount-tts-service-production.up.railway.app"
+# AMOUNT_TTS_SERVICE_URL = "https://amount-tts-service.railway.internal"
+AMOUNT_TTS_SERVICE_URL = "https://amount-tts-service-production.up.railway.app"
 GENERATE_AMOUNT_TTS_PATH = "/generate_voice"
