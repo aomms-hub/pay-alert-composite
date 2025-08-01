@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
     finally:
         logging.info("App shutting down...")
         await database.disconnect()
-        cache_status("inactive")
+        await rabbit_client.close()
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(consumer_route.router)
@@ -33,16 +33,3 @@ app.include_router(dashboard_route.router)
 @app.get("/")
 async def root():
     return {"message": "🚀 Pay Alert Composite is alive!"}
-
-@app.post("/start_consumer")
-async def start_consume(background_tasks: BackgroundTasks):
-    if rabbit_client.is_running():
-        return {"status": "already consuming"}
-
-    background_tasks.add_task(rabbit_client.start)
-    logging.info("🚀 Consumer task started in background")
-    return {"status": "consumer started"}
-
-@app.get("/consumer-status")
-async def consumer_status():
-    return {"running": rabbit_client.is_running()}
