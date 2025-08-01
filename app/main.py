@@ -13,18 +13,15 @@ rabbit_client = RabbitClient()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     try:
-        logging.info("Starting lifespan: connecting to RabbitMQ...")
-        await rabbit_client.start()
-        logging.info("Connected to RabbitMQ!")
+        logging.info("App starting up...")
+        cache_status("inactive")
         yield
     except Exception as e:
         logging.error(f"Error in lifespan startup: {e}")
         raise e
     finally:
-        logging.info("Closing RabbitMQ connection...")
-        await rabbit_client.close()
+        logging.info("App shutting down...")
         cache_status("inactive")
-        logging.info("RabbitMQ connection closed.")
 
 app = FastAPI(lifespan=lifespan)
 
