@@ -4,7 +4,7 @@ import json
 import time
 from config import RABBITMQ_URL, EXCHANGE_NAME, ROUTING_KEY, QUEUE_NAME
 from app.service.notification_service import notify
-
+from app.service.redis_service import cache_status
 
 class RabbitClient:
     def __init__(self, url: str = RABBITMQ_URL, idle_timeout=300):
@@ -46,6 +46,7 @@ class RabbitClient:
         self.running = True
         self.last_activity = time.time()
         self.consumer_tag = await self.queue.consume(self.on_message)
+        cache_status("active")
         print("🚀 Start consuming messages...")
 
         self.idle_task = asyncio.create_task(self._idle_watcher())
@@ -79,3 +80,4 @@ class RabbitClient:
             self.channel = None
             self.exchange = None
             self.queue = None
+            cache_status("inactive")

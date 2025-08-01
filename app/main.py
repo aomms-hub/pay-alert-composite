@@ -1,5 +1,6 @@
 import logging
 from contextlib import asynccontextmanager
+from app.service.redis_service import cache_status
 
 from fastapi import FastAPI, BackgroundTasks
 
@@ -13,7 +14,7 @@ rabbit_client = RabbitClient()
 async def lifespan(app: FastAPI):
     try:
         logging.info("Starting lifespan: connecting to RabbitMQ...")
-        await rabbit_client.connect()   # แค่ connect ไม่ต้อง start consume
+        await rabbit_client.connect()
         logging.info("Connected to RabbitMQ!")
         yield
     except Exception as e:
@@ -22,6 +23,7 @@ async def lifespan(app: FastAPI):
     finally:
         logging.info("Closing RabbitMQ connection...")
         await rabbit_client.close()
+        cache_status("inactive")
         logging.info("RabbitMQ connection closed.")
 
 app = FastAPI(lifespan=lifespan)

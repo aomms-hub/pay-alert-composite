@@ -3,7 +3,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+SERVICE_NAME = "pay-alert-composite"
+TIME_ZONE = "Asia/Bangkok"
+
 RABBITMQ_URL = os.getenv("RABBITMQ_URL")
+REDIS_URL = os.getenv("UPSTASH_REDIS_REST_URL")
 
 EXCHANGE_NAME = "notification.queue.amount"
 ROUTING_KEY = "notify.amount.parsed"
