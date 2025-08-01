@@ -11,22 +11,17 @@ from app.routers import consumer_route, dashboard_route
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(message)s")
 
 rabbit_client = RabbitClient()
-
+is_sleeping = False
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    try:
-        logging.info("App starting up...")
-        cache_status("inactive")
-        await database.connect()
-        yield
-    except Exception as e:
-        logging.error(f"Error in lifespan startup: {e}")
-        raise e
-    finally:
-        logging.info("App shutting down...")
-        await database.disconnect()
-        await rabbit_client.close()
+    logging.info("Starting app...")
+    await database.connect()
+    await rabbit_client.start()
+    yield
+    logging.info("Shutting down app...")
+    await database.disconnect()
+    await rabbit_client.close()
 
 
 app = FastAPI(lifespan=lifespan)
@@ -41,10 +36,13 @@ async def root():
         data="🚀 Pay Alert Composite is alive!"
     )
 
-
-@app.post("/database/disconnect")
-async def disconnect_database():
+@app.post("/service/sleep")
+async def sleep_service():
+    global is_sleeping
     await database.disconnect()
-    return CommonResponse(
-        status=CommonStatus.from_enum(Responses.SUCCESS)
-    )
+    is_sleeping = True
+    return {"status": "service sleeping"}
+
+@app.get("/service/status")
+async def get_status():
+    return {"sleeping": is_sleeping}
