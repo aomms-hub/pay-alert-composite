@@ -8,4 +8,3 @@ httpx
 redis
 databases
 asyncpg
-CORSMiddleware

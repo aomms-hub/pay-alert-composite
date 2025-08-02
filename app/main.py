@@ -1,7 +1,7 @@
 import logging
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 from app.client.db_client import database
 from app.models.common_response import CommonResponse, CommonStatus
 from app.constants.response import Responses
