@@ -19,7 +19,7 @@ def ensure_db_connection(func):
 async def insert_transaction_log(transaction_log: TransactionLogCreate):
     query = """
     INSERT INTO transaction_log (amount, source, sound_url, note, timestamp)
-    VALUES (:amount, :source, :sound_url, :note, :timestamp)
+    VALUES (:transaction_log.amount, :transaction_logsource, :transaction_log.sound_url, :transaction_log.note, :ttransaction_log.imestamp)
     RETURNING id
     """
     values = {
