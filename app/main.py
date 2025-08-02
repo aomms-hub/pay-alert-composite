@@ -14,6 +14,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(levelname)s | %(
 rabbit_client = RabbitClient()
 is_sleeping = False
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logging.info("Starting app...")
@@ -24,16 +25,18 @@ async def lifespan(app: FastAPI):
     await database.disconnect()
     await rabbit_client.close()
 
+
 app = FastAPI(lifespan=lifespan)
 app.include_router(consumer_route.router)
 app.include_router(dashboard_route.router)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=CORS_ALLOW_ORIGINS,       # หรือ ["*"] ถ้าอยากเปิดหมด
-    allow_credentials=True,      # อนุญาตส่ง cookie
-    allow_methods=["*"],         # อนุญาตทุก HTTP method (GET, POST, PUT, DELETE)
-    allow_headers=["*"],         # อนุญาตทุก header
+    allow_origins=CORS_ALLOW_ORIGINS,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
+
 
 @app.get("/")
 async def root():
@@ -42,12 +45,14 @@ async def root():
         data="🚀 Pay Alert Composite is alive!"
     )
 
+
 @app.post("/service/sleep")
 async def sleep_service():
     global is_sleeping
     await database.disconnect()
     is_sleeping = True
     return {"status": "service sleeping"}
+
 
 @app.get("/service/status")
 async def get_status():
