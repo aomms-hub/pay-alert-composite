@@ -13,6 +13,12 @@ DATABASE_URL = os.getenv("POSTGRESQL_URL")
 EXCHANGE_NAME = "notification.queue.amount"
 ROUTING_KEY = "notify.amount.parsed"
 QUEUE_NAME = "noti.amount.in.composite"
-# AMOUNT_TTS_SERVICE_URL = "https://amount-tts-service.railway.internal"
 AMOUNT_TTS_SERVICE_URL = "https://amount-tts-service-production.up.railway.app"
 GENERATE_AMOUNT_TTS_PATH = "/generate_voice"
+
+PAY_ALERT_DASHBOARD_URL ="https://pay-alert-dashboard.vercel.app/"
+
+CORS_ALLOW_ORIGINS = [
+    "http://localhost:3000/",
+    PAY_ALERT_DASHBOARD_URL,
+]
