@@ -10,7 +10,7 @@ async def notify(message: dict):
         source=message['source'],
         timestamp=message['timestamp'],
         note=None,
-        sound_url=tts_response['audio_url']
+        sound_url=tts_response.audio_url
     )
     await insert_transaction_log(transaction_log)
     print(tts_response)
