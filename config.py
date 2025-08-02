@@ -16,9 +16,9 @@ QUEUE_NAME = "noti.amount.in.composite"
 AMOUNT_TTS_SERVICE_URL = "https://amount-tts-service-production.up.railway.app"
 GENERATE_AMOUNT_TTS_PATH = "/generate_voice"
 
-PAY_ALERT_DASHBOARD_URL ="https://pay-alert-dashboard.vercel.app/"
+PAY_ALERT_DASHBOARD_URL ="https://pay-alert-dashboard.vercel.app"
 
 CORS_ALLOW_ORIGINS = [
-    "http://localhost:3000/",
+    "http://localhost:3000",
     PAY_ALERT_DASHBOARD_URL,
 ]
