@@ -1,5 +1,5 @@
 import logging
-from fastapi import FastAPI, WebSocket
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.models.common_response import CommonResponse, CommonStatus
 from app.constants.response import Responses
