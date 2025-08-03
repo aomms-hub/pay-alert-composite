@@ -27,7 +27,6 @@ async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
-            # รอรับข้อความจาก client (ถ้าไม่ใช้งาน สามารถ comment หรือ ลบได้)
             await websocket.receive_text()
     except WebSocketDisconnect:
         manager.disconnect(websocket)
