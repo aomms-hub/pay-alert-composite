@@ -14,7 +14,7 @@ class NotificationRequest(BaseModel):
     timestamp: str
 
 
-@router.post("/")
+@router.post("")
 async def notification(request: NotificationRequest):
     logging.info("incoming request /notify:" + str(request))
     return CommonResponse(
