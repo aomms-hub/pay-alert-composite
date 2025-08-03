@@ -3,7 +3,6 @@ uvicorn[standard]
 python-dotenv
 requests
 pydantic
-aio-pika
 httpx
 redis
 databases
